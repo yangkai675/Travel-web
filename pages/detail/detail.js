@@ -13,6 +13,7 @@ Page({
 
     // 模拟 AI 生成的行程（MVP 阶段）
     const mockTrip = this.generateMockTrip(city, days);
+    
     this.setData({ tripDays: mockTrip });
   },
 
