@@ -1,0 +1,79 @@
+.detail-container {
+  padding: 40rpx;
+  background-color: #f8f9fa;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.city {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #212121;
+}
+
+.info {
+  font-size: 28rpx;
+  color: #616161;
+  margin-top: 8rpx;
+}
+
+.day-section {
+  margin-bottom: 40rpx;
+}
+
+.day-title {
+  font-size: 32rpx;
+  color: #00BFA5;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.card {
+  background: white;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.08);
+}
+
+.card-header {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #212121;
+  margin-bottom: 8rpx;
+}
+
+.card-desc {
+  font-size: 28rpx;
+  color: #616161;
+  margin-bottom: 8rpx;
+}
+
+.card-meta {
+  font-size: 26rpx;
+  color: #00BFA5;
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.footer {
+  display: flex;
+  gap: 20rpx;
+  justify-content: center;
+  margin-top: 60rpx;
+}
+
+.btn {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background: #00BFA5;
+  color: white;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+}

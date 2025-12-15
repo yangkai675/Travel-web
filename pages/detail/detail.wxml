@@ -1,0 +1,30 @@
+<view class="detail-container">
+  <view class="header">
+    <text class="city">{{city}}</text>
+    <text class="info">· {{days}}天{{days-1}}晚 · 预算 ¥{{budget}}</text>
+  </view>
+
+  <view wx:for="{{tripDays}}" wx:key="day" class="day-section">
+    <view class="day-title">📅 Day {{index + 1}}</view>
+    
+    <view wx:for="{{item.items}}" wx:key="idx" class="card">
+      <view class="card-header">
+        <text wx:if="{{item.type === 'attraction'}}">🏯</text>
+        <text wx:elif="{{item.type === 'restaurant'}}">🍜</text>
+        <text wx:else>🏨</text>
+        {{item.time}}：{{item.name}}
+      </view>
+      <view class="card-desc">{{item.desc}}</view>
+      <view class="card-meta">
+        <text wx:if="{{item.cost}}">¥{{item.cost}}</text>
+        <text wx:if="{{item.rating}}">⭐{{item.rating}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <button class="btn">❤️ 收藏攻略</button>
+    <button class="btn">🔄 重新生成</button>
+    <button class="btn">↗️ 分享好友</button>
+  </view>
+</view> 

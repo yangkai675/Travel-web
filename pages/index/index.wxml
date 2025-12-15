@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="hero">
+    <image src="/images/travel-bg.jpg" class="bg-image" mode="cover"></image>
+    <view class="title">🌍 智行攻略</view>
+  </view>
+
+  <view class="form-container">
+    <!-- 城市选择 -->
+    <view class="form-item">
+      <text class="label">📍 目的地</text>
+      <picker bindchange="onCityChange" value="{{cityIndex}}" range="{{cities}}">
+        <view class="picker">{{cities[cityIndex]}} ▼</view>
+      </picker>
+    </view>
+
+    <!-- 天数选择 -->
+    <view class="form-item">
+      <text class="label">📅 游玩天数</text>
+      <view class="days-group">
+        <view wx:for="{{[1,2,3,4,5]}}" wx:key="index"
+              class="day-btn {{selectedDays === item ? 'active' : ''}}"
+              bindtap="selectDays" data-days="{{item}}">
+          {{item}}天
+        </view>
+      </view>
+    </view>
+
+    <!-- 预算输入 -->
+    <view class="form-item">
+      <text class="label">💰 总预算（元）</text>
+      <input class="input" type="number" placeholder="例如：10000" bindinput="onBudgetInput" value="{{budget}}" />
+    </view>
+
+    <!-- 生成按钮 -->
+    <button class="generate-btn" bindtap="generateTrip">
+      <text class="btn-text">🚀 生成我的专属攻略</text>
+    </button>
+  </view>
+</view>
