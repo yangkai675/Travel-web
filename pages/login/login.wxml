@@ -1,0 +1,69 @@
+<!--pages/login/login.wxml-->
+<view class="login-container">
+  <!-- 背景装饰 -->
+  <view class="bg-decoration">
+    <view class="circle circle-1"></view>
+    <view class="circle circle-2"></view>
+    <view class="circle circle-3"></view>
+  </view>
+
+  <!-- 顶部区域 -->
+  <view class="header">
+    <view class="logo-wrapper">
+      <text class="logo-emoji">🌍</text>
+    </view>
+    <text class="app-name">智行攻略</text>
+    <text class="app-slogan">AI 智能旅行规划助手</text>
+  </view>
+
+  <!-- 内容区域 -->
+  <view class="content">
+    <!-- 功能介绍 -->
+    <view class="feature-card">
+      <view class="feature-title">登录后可以使用以下功能</view>
+      <view class="feature-list">
+        <view class="feature-item">
+          <view class="feature-icon">📍</view>
+          <text class="feature-text">保存旅行计划</text>
+        </view>
+        <view class="feature-item">
+          <view class="feature-icon">❤️</view>
+          <text class="feature-text">收藏心仪目的地</text>
+        </view>
+        <view class="feature-item">
+          <view class="feature-icon">📖</view>
+          <text class="feature-text">查看历史记录</text>
+        </view>
+        <view class="feature-item">
+          <view class="feature-icon">🎯</view>
+          <text class="feature-text">个性化推荐</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 登录按钮 -->
+    <button
+      class="login-btn"
+      open-type="getPhoneNumber"
+      bindgetphonenumber="getPhoneNumber"
+    >
+      <view class="btn-content">
+        <text class="btn-icon">📱</text>
+        <text class="btn-text">手机号快捷登录</text>
+      </view>
+    </button>
+
+    <!-- 协议条款 -->
+    <view class="agreement">
+      <text class="agreement-text">登录即表示同意</text>
+      <text class="agreement-link" bindtap="viewAgreement">《用户协议》</text>
+      <text class="agreement-text">和</text>
+      <text class="agreement-link" bindtap="viewPrivacy">《隐私政策》</text>
+    </view>
+  </view>
+
+  <!-- 底部提示 -->
+  <view class="footer">
+    <text class="footer-text">未注册的手机号将自动创建账号</text>
+  </view>
+</view>

@@ -1,0 +1,1 @@
+export const SERVER_IP = 'https://springboot-ff8y-207643-6-1391761948.sh.run.tcloudbase.com';

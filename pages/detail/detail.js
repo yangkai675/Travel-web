@@ -1,4 +1,6 @@
 // pages/detail/detail.js
+const auth = require('../../utils/auth');
+
 Page({
   data: {
     city: '',
@@ -8,12 +10,17 @@ Page({
   },
 
   onLoad(options) {
+    // 检查登录状态，未登录则跳转到登录页
+    if (!auth.requireLogin()) {
+      return;
+    }
+
     const { city, days, budget } = options;
     this.setData({ city, days: parseInt(days), budget: parseInt(budget) });
 
     // 模拟 AI 生成的行程（MVP 阶段）
     const mockTrip = this.generateMockTrip(city, days);
-    
+
     this.setData({ tripDays: mockTrip });
   },
 

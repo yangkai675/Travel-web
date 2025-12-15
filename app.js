@@ -1,18 +1,23 @@
 // app.js
 App({
   onLaunch() {
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
+    // 检查登录状态
+    this.checkLoginStatus();
   },
+
+  checkLoginStatus() {
+    const token = wx.getStorageSync('token');
+    if (token) {
+      // 如果有 token，验证其有效性
+      const auth = require('./utils/auth');
+      auth.checkTokenValid().then(valid => {
+        if (valid) {
+          this.globalData.userInfo = auth.getUserInfo();
+        }
+      });
+    }
+  },
+
   globalData: {
     userInfo: null
   }
