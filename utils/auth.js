@@ -1,34 +1,38 @@
 /**
- * 微信手机号登录工具
- * 适配微信云后端
+ * 微信登录工具
+ * 使用 wx.login 获取 code 发送给后端解析 openid 和 unionid
  */
 
 const request = require('./request');
-
-// 微信云服务器地址，请根据实际情况修改
-const SERVER_IP = 'https://your-cloud-server.com'; // 替换为您的微信云服务器地址
+const { SERVER_IP } = require('../conf/s');
 
 /**
- * 手机号快捷登录
- * @param {string} phoneCode - getPhoneNumber 获取的 code
+ * 微信登录
+ * 使用 wx.login 获取 code，后端解析获取 openid 和 unionid
  * @returns {Promise} 登录结果
  */
-function loginWithPhone(phoneCode) {
+function login() {
   return new Promise((resolve, reject) => {
+    console.log('=== 开始登录流程 ===');
+
     // 显示加载提示
     wx.showLoading({
       title: '登录中...',
       mask: true
     });
 
-    // 先获取微信登录凭证
+    // 获取微信登录凭证
     wx.login({
       success: (loginRes) => {
+        console.log('wx.login 成功，code:', loginRes.code);
+
         if (loginRes.code) {
           // 调用后端登录接口
+          console.log('准备调用后端接口:', SERVER_IP + '/user/login');
+          console.log('请求参数:', { code: loginRes.code });
+
           request.post('/user/login', {
-            loginCode: loginRes.code,    // wx.login 获取的 code
-            phoneCode: phoneCode          // getPhoneNumber 获取的 code
+            code: loginRes.code    // wx.login 获取的 code
           })
           .then(data => {
             wx.hideLoading();
@@ -165,7 +169,7 @@ function checkTokenValid() {
 
 module.exports = {
   SERVER_IP,
-  loginWithPhone,
+  login,
   checkLogin,
   requireLogin,
   getUserInfo,

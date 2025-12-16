@@ -3,10 +3,10 @@
  * 适配微信云后端，统一处理请求和响应
  */
 
-const auth = require('./auth');
+const { SERVER_IP } = require('../conf/s');
 
 // 微信云服务器地址
-const BASE_URL = auth.SERVER_IP;
+const BASE_URL = SERVER_IP;
 
 /**
  * 封装的请求方法

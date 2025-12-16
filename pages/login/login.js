@@ -46,26 +46,17 @@ Page({
 
   /**
    * 获取手机号授权
-   * 这是微信提供的手机号快捷登录能力
+   * 用户授权后，调用登录接口（使用 wx.login 的 code）
    */
   getPhoneNumber(e) {
     console.log('getPhoneNumber event:', e);
 
     // 用户同意授权
     if (e.detail.errMsg === 'getPhoneNumber:ok') {
-      const phoneCode = e.detail.code;
+      console.log('用户同意授权，开始登录');
 
-      if (!phoneCode) {
-        wx.showToast({
-          title: '获取手机号失败',
-          icon: 'none',
-          duration: 2000
-        });
-        return;
-      }
-
-      // 调用登录方法
-      auth.loginWithPhone(phoneCode)
+      // 调用登录方法（内部使用 wx.login）
+      auth.login()
         .then(data => {
           console.log('登录成功:', data);
 
@@ -76,14 +67,13 @@ Page({
         })
         .catch(err => {
           console.error('登录失败:', err);
-          // 错误处理已在 auth.js 中统一处理，这里不需要额外操作
         });
     }
     // 用户拒绝授权
     else if (e.detail.errMsg === 'getPhoneNumber:fail user deny') {
       wx.showModal({
         title: '提示',
-        content: '需要授权手机号才能登录使用完整功能哦',
+        content: '需要授权才能登录使用完整功能哦',
         showCancel: false,
         confirmText: '我知道了'
       });
