@@ -5,30 +5,74 @@
   </view>
 
   <view class="form-container">
-    <!-- 城市选择 -->
+    <!-- 起始地 -->
     <view class="form-item">
-      <text class="label">📍 目的地</text>
-      <picker bindchange="onCityChange" value="{{cityIndex}}" range="{{cities}}">
-        <view class="picker">{{cities[cityIndex]}} ▼</view>
+      <text class="label">🏠 起始地</text>
+      <picker mode="multiSelector" bindchange="onStartPlaceChange" bindcolumnchange="onStartColumnChange"
+              value="{{startPlaceIndex}}" range="{{startPlaceColumns}}">
+        <view class="picker">
+          {{startPlaceColumns[0][startPlaceIndex[0]]}} - {{startPlaceColumns[1][startPlaceIndex[1]]}} ▼
+        </view>
       </picker>
     </view>
 
-    <!-- 天数选择 -->
+    <!-- 目的地 -->
     <view class="form-item">
-      <text class="label">📅 游玩天数</text>
-      <view class="days-group">
-        <view wx:for="{{[1,2,3,4,5]}}" wx:key="index"
-              class="day-btn {{selectedDays === item ? 'active' : ''}}"
-              bindtap="selectDays" data-days="{{item}}">
-          {{item}}天
+      <text class="label">📍 目的地</text>
+      <picker mode="multiSelector" bindchange="onDestPlaceChange" bindcolumnchange="onDestColumnChange"
+              value="{{destPlaceIndex}}" range="{{destPlaceColumns}}">
+        <view class="picker">
+          {{destPlaceColumns[0][destPlaceIndex[0]]}} - {{destPlaceColumns[1][destPlaceIndex[1]]}} ▼
         </view>
+      </picker>
+    </view>
+
+    <!-- 出发日期 -->
+    <view class="form-item">
+      <text class="label">📅 出发日期</text>
+      <picker mode="date" value="{{departureDate}}" start="{{minDate}}" end="{{maxDate}}"
+              bindchange="onDepartureDateChange">
+        <view class="picker">{{departureDate}} ▼</view>
+      </picker>
+    </view>
+
+    <!-- 游玩天数 -->
+    <view class="form-item">
+      <text class="label">⏰ 游玩天数：{{selectedDays}}天</text>
+      <view class="slider-container">
+        <slider min="1" max="10" step="1" value="{{selectedDays}}"
+                bindchange="onDaysChange" show-value activeColor="#00bfa5" />
       </view>
+    </view>
+
+    <!-- 人数选择 -->
+    <view class="form-item">
+      <text class="label">👥 出行人数</text>
+      <picker bindchange="onPeopleChange" value="{{peopleIndex}}" range="{{peopleRange}}">
+        <view class="picker">{{peopleRange[peopleIndex]}}人 ▼</view>
+      </picker>
+    </view>
+
+    <!-- 出行方式 -->
+    <view class="form-item">
+      <text class="label">🚄 出行方式</text>
+      <picker bindchange="onTransportChange" value="{{transportIndex}}" range="{{transportOptions}}">
+        <view class="picker">{{transportOptions[transportIndex]}} ▼</view>
+      </picker>
     </view>
 
     <!-- 预算输入 -->
     <view class="form-item">
       <text class="label">💰 总预算（元）</text>
       <input class="input" type="number" placeholder="例如：10000" bindinput="onBudgetInput" value="{{budget}}" />
+    </view>
+
+    <!-- 备注输入 -->
+    <view class="form-item">
+      <text class="label">📝 特殊需求（选填）</text>
+      <textarea class="textarea" placeholder="例如：主要游览故宫、晚上需要2间房"
+                bindinput="onRemarksInput" value="{{remarks}}" maxlength="200" />
+      <view class="char-count">{{remarks.length}}/200</view>
     </view>
 
     <!-- 生成按钮 -->

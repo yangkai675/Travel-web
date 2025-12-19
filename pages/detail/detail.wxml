@@ -1,24 +1,38 @@
 <view class="detail-container">
   <view class="header">
-    <text class="city">{{city}}</text>
+    <text class="city">{{fromCity}} → {{toCity}}</text>
     <text class="info">· {{days}}天{{days-1}}晚 · 预算 ¥{{budget}}</text>
   </view>
 
+  <!-- 如果后端返回的是纯文本内容 -->
+  <view wx:if="{{planContent && tripDays.length === 0}}" class="content-section">
+    <text class="plan-content">{{planContent}}</text>
+  </view>
+
+  <!-- 如果后端返回的是结构化数据 -->
   <view wx:for="{{tripDays}}" wx:key="day" class="day-section">
-    <view class="day-title">📅 Day {{index + 1}}</view>
-    
-    <view wx:for="{{item.items}}" wx:key="idx" class="card">
-      <view class="card-header">
-        <text wx:if="{{item.type === 'attraction'}}">🏯</text>
-        <text wx:elif="{{item.type === 'restaurant'}}">🍜</text>
-        <text wx:else>🏨</text>
-        {{item.time}}：{{item.name}}
+    <view class="day-title">📅 Day {{item.day || index + 1}}</view>
+
+    <!-- 如果有结构化的 items -->
+    <view wx:if="{{item.items && item.items.length > 0}}">
+      <view wx:for="{{item.items}}" wx:for-item="subItem" wx:key="idx" class="card">
+        <view class="card-header">
+          <text wx:if="{{subItem.type === 'attraction'}}">🏯</text>
+          <text wx:elif="{{subItem.type === 'restaurant'}}">🍜</text>
+          <text wx:else>🏨</text>
+          {{subItem.time}}：{{subItem.name}}
+        </view>
+        <view class="card-desc">{{subItem.desc}}</view>
+        <view class="card-meta">
+          <text wx:if="{{subItem.cost}}">¥{{subItem.cost}}</text>
+          <text wx:if="{{subItem.rating}}">⭐{{subItem.rating}}</text>
+        </view>
       </view>
-      <view class="card-desc">{{item.desc}}</view>
-      <view class="card-meta">
-        <text wx:if="{{item.cost}}">¥{{item.cost}}</text>
-        <text wx:if="{{item.rating}}">⭐{{item.rating}}</text>
-      </view>
+    </view>
+
+    <!-- 如果只有文本内容 -->
+    <view wx:if="{{item.content}}" class="day-content">
+      <text>{{item.content}}</text>
     </view>
   </view>
 

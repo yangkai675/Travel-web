@@ -67,29 +67,25 @@
   box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.1);
 }
 
-.days-group {
-  display: flex;
-  gap: 20rpx;
-  justify-content: space-between;
+.slider-container {
+  padding: 20rpx 0;
 }
 
-.day-btn {
-  flex: 1;
-  height: 72rpx;
-  line-height: 72rpx;
-  text-align: center;
+.textarea {
   background: #fff;
   border: 1px solid #e0e0e0;
-  border-radius: 40rpx;
-  font-size: 28rpx;
-  color: #616161;
-  transition: all 0.3s;
+  border-radius: 8rpx;
+  padding: 20rpx 24rpx;
+  font-size: 32rpx;
+  min-height: 150rpx;
+  box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.1);
 }
 
-.day-btn.active {
-  background: #00bfa5;
-  color: white;
-  border-color: #00bfa5;
+.char-count {
+  text-align: right;
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
 }
 
 .generate-btn {

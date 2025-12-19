@@ -45,47 +45,83 @@ Page({
   },
 
   /**
-   * 获取手机号授权
-   * 用户授权后，调用登录接口（使用 wx.login 的 code）
+   * 微信授权登录
    */
-  getPhoneNumber(e) {
-    console.log('getPhoneNumber event:', e);
+  handleWxLogin() {
+    console.log('开始微信授权登录');
 
-    // 用户同意授权
-    if (e.detail.errMsg === 'getPhoneNumber:ok') {
-      console.log('用户同意授权，开始登录');
+    // 获取用户信息授权
+    wx.getUserProfile({
+      desc: '用于完善用户资料',
+      success: (res) => {
+        console.log('获取用户信息成功:', res.userInfo);
 
-      // 调用登录方法（内部使用 wx.login）
-      auth.login()
-        .then(data => {
-          console.log('登录成功:', data);
+        // 调用登录方法
+        auth.login()
+          .then(data => {
+            console.log('登录成功，返回数据:', data);
 
-          // 延迟跳转，让用户看到成功提示
-          setTimeout(() => {
-            this.navigateBack();
-          }, 1500);
-        })
-        .catch(err => {
-          console.error('登录失败:', err);
-        });
-    }
-    // 用户拒绝授权
-    else if (e.detail.errMsg === 'getPhoneNumber:fail user deny') {
-      wx.showModal({
-        title: '提示',
-        content: '需要授权才能登录使用完整功能哦',
-        showCancel: false,
-        confirmText: '我知道了'
-      });
-    }
-    // 其他错误
-    else {
-      wx.showToast({
-        title: '授权失败，请重试',
-        icon: 'none',
-        duration: 2000
-      });
-    }
+            // 验证 token 是否已保存
+            const savedToken = wx.getStorageSync('token');
+            console.log('保存的 token:', savedToken);
+            console.log('登录状态检查:', auth.checkLogin());
+
+            // 延迟跳转，让用户看到成功提示
+            setTimeout(() => {
+              // 检查是否有待处理的生成请求
+              const pendingGenerate = wx.getStorageSync('pendingGenerate');
+              console.log('待处理的生成请求:', pendingGenerate);
+
+              if (pendingGenerate) {
+                // 清除待处理的请求
+                wx.removeStorageSync('pendingGenerate');
+
+                // 直接跳转到详情页
+                const {
+                  startProvince,
+                  startCity,
+                  destProvince,
+                  destCity,
+                  days,
+                  people,
+                  transport,
+                  budget,
+                  remarks
+                } = pendingGenerate;
+
+                const params = `startProvince=${startProvince}&startCity=${startCity}&destProvince=${destProvince}&destCity=${destCity}&days=${days}&people=${people}&transport=${transport}&budget=${budget}&remarks=${encodeURIComponent(remarks || '')}`;
+                wx.redirectTo({
+                  url: `/pages/detail/detail?${params}`
+                });
+              } else {
+                // 没有待处理的请求，返回上一页或首页
+                this.navigateBack();
+              }
+            }, 1500);
+          })
+          .catch(err => {
+            console.error('登录失败:', err);
+          });
+      },
+      fail: (err) => {
+        console.log('用户取消授权:', err);
+
+        if (err.errMsg.includes('deny')) {
+          wx.showModal({
+            title: '提示',
+            content: '需要授权才能登录使用完整功能哦',
+            showCancel: false,
+            confirmText: '我知道了'
+          });
+        } else {
+          wx.showToast({
+            title: '授权失败，请重试',
+            icon: 'none',
+            duration: 2000
+          });
+        }
+      }
+    });
   },
 
   /**

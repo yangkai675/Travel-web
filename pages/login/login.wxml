@@ -44,12 +44,11 @@
     <!-- 登录按钮 -->
     <button
       class="login-btn"
-      open-type="getPhoneNumber"
-      bindgetphonenumber="getPhoneNumber"
+      bindtap="handleWxLogin"
     >
       <view class="btn-content">
-        <text class="btn-icon">📱</text>
-        <text class="btn-text">手机号快捷登录</text>
+        <text class="btn-icon">🔐</text>
+        <text class="btn-text">微信授权登录</text>
       </view>
     </button>
 
@@ -64,6 +63,6 @@
 
   <!-- 底部提示 -->
   <view class="footer">
-    <text class="footer-text">未注册的手机号将自动创建账号</text>
+    <text class="footer-text">未注册的账号将自动创建</text>
   </view>
 </view>
